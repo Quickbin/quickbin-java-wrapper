@@ -21,7 +21,7 @@ public class TokenRequestFactory implements TokenRequest {
     private final String email;
     private final ExecutorService service;
     private final OkHttpClient httpClient = new OkHttpClient();
-    private final String BASE_URL = "https://quickbin.pw/api/v1/bot.php";
+    private final String BASE_URL = "https://quickbin.pw/api/v2/bot/request/";
 
     public TokenRequestFactory(String email, ExecutorService service) {
         if (email == null || email.isEmpty())
@@ -41,7 +41,7 @@ public class TokenRequestFactory implements TokenRequest {
     public CompletableFuture<Void> request() {
         return CompletableFuture.supplyAsync(() -> {
             Request request = new Request.Builder().url(BASE_URL).post(new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("email", email).addFormDataPart("method", "request").build()).build();
+                    .addFormDataPart("email", email).build()).build();
 
             // Parse response accordingly.
             try {
